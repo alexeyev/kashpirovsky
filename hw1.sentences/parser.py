@@ -2,14 +2,25 @@
 
 import re
 
-def dot(position, par):
-    return re.compile("^[\\.\\?!] $").match(par[position - 1 : position + 1])
-    #return ". " == par[position - 1 : position + 1]
+# todo: move patterns to global variables
 
-def double_num(position, par):
-    return par[position - 1]
+def basic(position, par):
+    return re.compile("^[\.\?!] $").match(par[position - 1 : position + 1])
 
-fpatterns = [dot]
+def prev_capital(position, par):
+    return re.compile("[A-ZА-Я]").match(par[position - 2: position - 1])
+
+def next_capt(position, par):
+    return basic(position, par) and re.compile(" [A-ZА-Я0-9]").match(par[position : position + 2]) and not prev_capital(position, par)
+
+def check_shortenings(pos, par):
+    return next_capt(pos, par) and not re.compile(u" [a-zа-я]{1,2}\. $").match(par[pos - 5 : pos + 1])
+
+def num(pos, par):
+    return re.compile("[0-9][\\.\\?!]+ $").match(par[pos - 5 : pos + 1])
+
+
+fpatterns = [check_shortenings] #, num]
 
 IN = 0
 OUT = 1
@@ -38,4 +49,4 @@ if __name__ == "__main__":
         for line in f:
 	    stripped = line.strip()
 	    for sentence in analyze_paragraph(stripped):
-                print sentence
+                print "<sentence>" + sentence + "</sentence>"
