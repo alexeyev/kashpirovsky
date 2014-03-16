@@ -17,6 +17,7 @@ Accuracy -- |число совпавших (ибо tn = 0)| / |объедине�
 """
 
 import sys
+from sets import Set
 
 try:
     print "true:", sys.argv[1]
@@ -65,5 +66,26 @@ def get_intervals(xml):
 	parser.parse(xml)
         return intervals
 
-print get_intervals(sys.argv[1])
+#------------------------------EVALUATION---------------------------------------------
+
+true = Set(get_intervals(sys.argv[1]))
+parsed = Set(get_intervals(sys.argv[2]))
+
+total_true = len(true)
+total_parsed = len(parsed)
+
+true_positive = len(true.intersection(parsed))
+true_negative = 0
+
+false_positive = total_parsed - true_positive
+
+p = true_positive / (total_parsed + 0.0)
+print "Precision =", p 
+r = true_positive / (total_true + 0.0)
+print "Recall =", r
+print "F1 =", 2 * p * r / (p + r)
+print "Accuracy =", true_positive / (total_true + total_parsed - true_positive + 0.0)
+
+
+
 
