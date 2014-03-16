@@ -29,26 +29,41 @@ except:
 
 from xml.sax import make_parser, handler
 
-class IntervalsCollector(handler.ContentHandler):
-    """ Не является thread-safe! """
-    
-    def __init__(self):
-        self._elems = 0
-        self._elem_types = {}
-        self.intervals = {}
+# yes, global variables
 
-    def startElement(self, name, attrs):
-        self._elems = self._elems + 1
-        self._elem_types[name] = self._elem_types.get(name, 0) + 1
+def get_intervals(xml):
+	class IntervalsCollector(handler.ContentHandler):
+            #global intervals
+	    def __init__(self, intervals):
+		self._elems = 0
+		self._elem_types = {}
 
-    def endDocument(self):
-        pass
+		self.in_sentence = False
 
-    def getIntervals(self, xml):
-        self.parse(xml)
+		self.start = 1
+		self.end = 0
+                self.intervals = intervals
 
-            
-parser = make_parser()
-parser.setContentHandler(IntervalsCollector())
-parser.parse(sys.argv[1])
+	    def startElement(self, name, attrs):
+		if name == "sentence":
+		    self.in_sentence = True
+
+	    def endElement(self, name):
+		if name == "sentence":
+		    self.in_sentence = False
+
+	    def characters(self, chars):
+		if self.in_sentence:
+		    print "[", chars.strip(), "]"
+		    self.start = self.end + 1
+		    self.end = self.start + len(chars.strip()) - 1
+		    self.intervals += [(self.start, self.end)]
+		    
+        intervals = []
+	parser = make_parser()
+	parser.setContentHandler(IntervalsCollector(intervals))
+	parser.parse(xml)
+        return intervals
+
+print get_intervals(sys.argv[1])
 
