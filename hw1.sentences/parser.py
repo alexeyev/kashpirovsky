@@ -84,7 +84,7 @@ def run(fr, fw):
         if stripped != "":
             print "---\nraw = ", stripped, "\n parsed = {"
             for sentence in analyze_paragraph(stripped.decode("utf-8")):
-                fw.write("<sentence>" + sentence.strip().encode("utf-8") + "</sentence>\n")
+                fw.write("<sentence>" + re.sub("\s+", " ", sentence.strip().encode("utf-8")) + "</sentence>\n")
                 print sentence.strip()
             print "}"
     fw.write("</sentences>")
