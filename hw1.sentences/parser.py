@@ -41,14 +41,17 @@ def next_capital(position, par):
 
 def check_shortenings(pos, par):
     """Перед точкой -- не скоращение из 1-2 букв"""
-    return next_capital(pos, par) and re.match(u".* [a-zа-я]{1,2}\. $", par[pos - 5 : pos + 1]) is None
+    return next_capital(pos, par) and re.match(u".* [a-zа-яA-ZА-Я]{1,2}\. $", par[pos - 5 : pos + 1]) is None
 
 def num(pos, par):
     """После числа -- точка и пробел; кажется, это всегда признак конца предложения"""
-    return re.match(u"[0-9][\\.\\?!]+ $",par[pos - 5 : pos + 1]) is not None
+    return re.match(u"[0-9][\.\?!]+ $",par[pos - 5 : pos + 1]) is not None
 
+def small_point_capital(pos, par):
+    """ """
+    return re.match(u"[a-zа-я0-9]+[\.\?!][A-ZА-Я]$", par[pos - 3 : pos + 2]) is not None
 
-fpatterns = [check_shortenings, is_end, num]
+fpatterns = [check_shortenings, is_end, num, small_point_capital]
 
 IN = 0
 OUT = 1
