@@ -25,4 +25,30 @@ except:
     print "\nShould have 2 arguments, quitting."
     quit()
 
+# ----------------BUILDING-INTERVALS----------------------------
+
+from xml.sax import make_parser, handler
+
+class IntervalsCollector(handler.ContentHandler):
+    """ Не является thread-safe! """
+    
+    def __init__(self):
+        self._elems = 0
+        self._elem_types = {}
+        self.intervals = {}
+
+    def startElement(self, name, attrs):
+        self._elems = self._elems + 1
+        self._elem_types[name] = self._elem_types.get(name, 0) + 1
+
+    def endDocument(self):
+        pass
+
+    def getIntervals(self, xml):
+        self.parse(xml)
+
+            
+parser = make_parser()
+parser.setContentHandler(IntervalsCollector())
+parser.parse(sys.argv[1])
 
