@@ -1,13 +1,13 @@
 __author__ = 'achugr'
 
 from xml.etree import ElementTree
-import distance
+import distance, sys
 
-true_corpus = "/Users/achugr/PycharmProjects/text-splitter/annotated-corpus.xml"
-parsed_corpus = "parsed-corpus.xml"
+#true_corpus = "/Users/achugr/PycharmProjects/text-splitter/annotated-corpus.xml"
+#parsed_corpus = "parsed-corpus.xml"
 
-iter_true = ElementTree.iterparse(true_corpus)
-iter_parsed = ElementTree.iterparse(parsed_corpus)
+iter_true = ElementTree.iterparse(sys.argv[0])
+iter_parsed = ElementTree.iterparse(sys.argv[1])
 
 matches = 0
 total_true = 0
