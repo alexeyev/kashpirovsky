@@ -24,13 +24,12 @@ class FeatureEvaluator:
     file_name_pattern = re.compile('(\d*)_(.*)\.txt')
     digit_patter = re.compile('\d')
     quotes_pattern = re.compile('\".*\"')
+    abbreviation_pattern = re.compile(u'[А-Я]{1,6}')
 
     files_features = {}
 
 
     def eval_features(self, number, clazz, text):
-        print text
-
         features = {}
         words_count = 0
         average_length = 0
@@ -60,9 +59,21 @@ class FeatureEvaluator:
         features['quotes_count'] = len(self.quotes_pattern.findall(text))
         features['digits_count'] = len(self.digit_patter.findall(text))
 
+        abbrevations_count = 0
+        for token in text.split():
+            if self.abbreviation_pattern.match(token):
+                abbrevations_count += 1
+                # print token
+                # else:
+                #     print "not match: ", token
+
+        # features['abbrevation_count'] = abbrevations_count
+        # if abbrevations_count>30:
+        #     print number, " ", abbrevations_count
+
         self.files_features[number] = features
 
-    def process_dir(self, dir_name):
+    def process_dir(self, dir_name, result_file):
         for file_name in os.listdir(dir_name):
             m = self.file_name_pattern.match(file_name)
             if m is not None:
@@ -70,10 +81,10 @@ class FeatureEvaluator:
                 text = f.read().decode("utf-8")
                 self.eval_features(m.group(1), m.group(2), text)
 
-        self.save()
+        self.save(result_file)
 
-    def save(self):
-        features_file = open("features.csv", "w")
+    def save(self, result_file):
+        features_file = open(result_file + ".csv", "w")
         keys = self.files_features[self.files_features.keys()[0]].keys()
         # features_file.write("file_number")
         for key in keys:
@@ -83,19 +94,18 @@ class FeatureEvaluator:
         features_file.write("\n")
 
         for file_number in self.files_features:
-            # features_file.write(file_number)
+            features_file.write(file_number)
             counter = 0
             for key in keys:
                 features_file.write(str(self.files_features[file_number][key]))
                 if counter < len(keys) - 1:
                     features_file.write(",")
-                counter+=1
+                counter += 1
             features_file.write("\n")
         features_file.flush()
         features_file.close()
 
 
 eval = FeatureEvaluator()
-eval.process_dir(".")
-
-# print string.lowercase
+eval.process_dir("test_set/", "test")
+eval.process_dir("learn_set/", "learn")
