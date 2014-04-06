@@ -75,17 +75,18 @@ class FeatureEvaluator:
     def save(self):
         features_file = open("features.csv", "w")
         keys = self.files_features[self.files_features.keys()[0]].keys()
-        features_file.write("file_number")
+        # features_file.write("file_number")
         for key in keys:
-            features_file.write(",")
             features_file.write(key)
+            features_file.write(",")
+
         features_file.write("\n")
 
         for file_number in self.files_features:
-            features_file.write(file_number)
+            # features_file.write(file_number)
             for key in keys:
-                features_file.write(", ")
                 features_file.write(str(self.files_features[file_number][key]))
+                features_file.write(", ")
             features_file.write("\n")
         features_file.flush()
         features_file.close()
