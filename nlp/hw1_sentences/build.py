@@ -44,12 +44,14 @@ for dirname in os.listdir(dir):
 with open("all_parsed.xml", "w+") as wr:
     wr.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<sentences>\n")
     for text in pd:
+        
         wr.write("<sentence>" + (text).encode("utf-8") + "</sentence>\n")
     wr.write("</sentences>")
 
 with open("all_annotated.xml", "w+") as wr:
     wr.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<sentences>\n")
     for text in ad:
-        wr.write("<sentence>" + (text).encode("utf-8") + "</sentence>\n")
+        if text.strip() != "":
+            wr.write("<sentence>" + (text).encode("utf-8") + "</sentence>\n")
     wr.write("</sentences>")
 

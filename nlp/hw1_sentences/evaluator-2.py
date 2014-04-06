@@ -19,8 +19,8 @@ try:
         total_true += 1
         event_parsed, elem_parsed = iter_parsed.next()
         total_parsed += 1
-        if elem_true.tag == "sentence" and elem_parsed.tag == "sentence" and elem_true.text != None:
-            print "comparison of %s ----- %s" % (elem_true.text, elem_parsed.text)
+        if elem_true.tag == "sentence" and elem_parsed.tag == "sentence":
+            #print "comparison of %s ----- %s" % (elem_true.text, elem_parsed.text)
             # if elem_true.text.strip() == elem_parsed.text.strip():
             if distance.levenshtein(elem_true.text.strip(), elem_parsed.text.strip()) < 5:
                 matches += 1
