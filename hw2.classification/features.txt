@@ -1,6 +1,0 @@
-1_accidents_1.txt
-1) 244
-2) 17
-1_accidents_2.txt
-1) 202
-2) 9

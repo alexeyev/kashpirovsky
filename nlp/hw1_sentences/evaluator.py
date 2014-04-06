@@ -33,38 +33,38 @@ from xml.sax import make_parser, handler
 # yes, global variables
 
 def get_intervals(xml):
-	class IntervalsCollector(handler.ContentHandler):
-            #global intervals
-	    def __init__(self, intervals):
-		self._elems = 0
-		self._elem_types = {}
+    class IntervalsCollector(handler.ContentHandler):
+        #global intervals
+        def __init__(self, intervals):
+            self._elems = 0
+            self._elem_types = {}
 
-		self.in_sentence = False
+            self.in_sentence = False
 
-		self.start = 1
-		self.end = 0
-                self.intervals = intervals
+            self.start = 1
+            self.end = 0
+            self.intervals = intervals
 
-	    def startElement(self, name, attrs):
-		if name == "sentence":
-		    self.in_sentence = True
+        def startElement(self, name, attrs):
+            if name == "sentence":
+                self.in_sentence = True
 
-	    def endElement(self, name):
-		if name == "sentence":
-		    self.in_sentence = False
+        def endElement(self, name):
+            if name == "sentence":
+                self.in_sentence = False
 
-	    def characters(self, chars):
-		if self.in_sentence:
-		    print "[", chars.strip(), "]"
-		    self.start = self.end + 1
-		    self.end = self.start + len(chars.strip()) - 1
-		    self.intervals += [(self.start, self.end)]
-		    
-        intervals = []
-	parser = make_parser()
-	parser.setContentHandler(IntervalsCollector(intervals))
-	parser.parse(xml)
-        return intervals
+        def characters(self, chars):
+            if self.in_sentence:
+                print "[", chars.strip(), "]"
+                self.start = self.end + 1
+                self.end = self.start + len(chars.strip()) - 1
+                self.intervals += [(self.start, self.end)]
+
+    intervals = []
+    parser = make_parser()
+    parser.setContentHandler(IntervalsCollector(intervals))
+    parser.parse(xml)
+    return intervals
 
 #------------------------------EVALUATION---------------------------------------------
 
@@ -80,7 +80,7 @@ true_negative = 0
 false_positive = total_parsed - true_positive
 
 p = true_positive / (total_parsed + 0.0)
-print "Precision =", p 
+print "Precision =", p
 r = true_positive / (total_true + 0.0)
 print "Recall =", r
 print "F1 =", 2 * p * r / (p + r)
