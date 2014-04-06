@@ -1,0 +1,26 @@
+file_number,latin_words,average_sentence_length,sentences_count,average_length,excl_marks,digits_count,words_count,quotes_count,class
+24, 0, 177, 7, 5, False, 32, 174, 0, economics
+25, 0, 132, 13, 6, False, 54, 226, 0, economics
+26, 3, 267, 4, 7, False, 19, 125, 0, hi_tech
+27, 0, 134, 7, 6, False, 10, 115, 0, culture
+20, 2, 172, 23, 6, False, 62, 520, 0, politics
+21, 4, 231, 7, 6, False, 28, 205, 0, politics
+22, 8, 177, 10, 6, False, 47, 228, 0, economics
+23, 21, 162, 11, 6, False, 50, 225, 3, hi_tech
+3, 4, 176, 5, 6, False, 19, 114, 0, auto
+5, 0, 126, 6, 6, False, 6, 91, 2, culture
+4, 0, 162, 7, 6, False, 2, 152, 0, culture
+7, 0, 681, 3, 6, False, 97, 243, 0, economics
+6, 6, 179, 7, 6, False, 52, 151, 3, economics
+9, 4, 192, 2, 6, False, 2, 51, 0, internet
+8, 2, 204, 3, 7, False, 12, 65, 1, hi_tech
+11, 2, 256, 8, 5, True, 44, 275, 6, sport
+10, 2, 346, 7, 6, False, 11, 304, 7, politics
+13, 2, 126, 15, 6, False, 28, 252, 0, sport
+12, 0, 450, 2, 5, False, 20, 126, 0, sport
+15, 0, 147, 21, 6, False, 48, 408, 0, society
+14, 4, 214, 19, 6, False, 33, 512, 0, society
+17, 0, 191, 9, 5, False, 9, 241, 1, hi_tech
+16, 0, 215, 10, 6, False, 40, 281, 0, society
+19, 0, 185, 5, 5, False, 16, 137, 0, science
+18, 6, 364, 6, 7, False, 47, 242, 0, science
