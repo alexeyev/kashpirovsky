@@ -84,13 +84,15 @@ class FeatureEvaluator:
 
         for file_number in self.files_features:
             # features_file.write(file_number)
+            counter = 0
             for key in keys:
                 features_file.write(str(self.files_features[file_number][key]))
-                features_file.write(", ")
+                if counter < len(keys) - 1:
+                    features_file.write(",")
+                counter+=1
             features_file.write("\n")
         features_file.flush()
         features_file.close()
-
 
 
 eval = FeatureEvaluator()
