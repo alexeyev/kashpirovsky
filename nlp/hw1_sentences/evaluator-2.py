@@ -6,8 +6,8 @@ import distance, sys
 #true_corpus = "/Users/achugr/PycharmProjects/text-splitter/annotated-corpus.xml"
 #parsed_corpus = "parsed-corpus.xml"
 
-iter_true = ElementTree.iterparse(sys.argv[0])
-iter_parsed = ElementTree.iterparse(sys.argv[1])
+iter_true = ElementTree.iterparse(sys.argv[1])
+iter_parsed = ElementTree.iterparse(sys.argv[2])
 
 matches = 0
 total_true = 0
@@ -19,7 +19,7 @@ try:
         total_true += 1
         event_parsed, elem_parsed = iter_parsed.next()
         total_parsed += 1
-        if elem_true.tag == "sentence" and elem_parsed.tag == "sentence":
+        if elem_true.tag == "sentence" and elem_parsed.tag == "sentence" and elem_true.text != None:
             print "comparison of %s ----- %s" % (elem_true.text, elem_parsed.text)
             # if elem_true.text.strip() == elem_parsed.text.strip():
             if distance.levenshtein(elem_true.text.strip(), elem_parsed.text.strip()) < 5:
