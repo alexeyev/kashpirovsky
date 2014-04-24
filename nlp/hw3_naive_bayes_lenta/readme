@@ -1,0 +1,7 @@
+1. Нужно собрать список новостей
+	cd news_crawler
+	scrapy crawl newsspider
+2. Заполнить базу данных
+	cd news_classifier
+	python test.py
+3. Запустить http://localhost:5000/ для теста
