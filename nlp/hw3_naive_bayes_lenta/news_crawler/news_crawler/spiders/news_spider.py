@@ -16,7 +16,7 @@ class NewsSpider(CrawlSpider):
     start_urls = ["http://auto.newsru.ru/"]
     client = MongoClient()
     db = client['news_db']
-    collection = db['news_collection4']
+    collection = db['news_collection']
  
     rules = (
     	Rule(SgmlLinkExtractor(allow=("\?page\=\d+"))),
