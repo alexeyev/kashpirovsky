@@ -11,17 +11,17 @@ from nltk.stem.snowball import RussianStemmer
 learn_internet = "learn_internet"
 learn_nointernet = "learn_nointernet"
 
-
 class NaiveBayes:
     classes = set()
-    docs_in_class = dict() # количество документов в классе
-    docs_number = 0 # число документов
+    docs_in_class = dict()   # количество документов в классе
+    docs_number = 0          # число документов
     unique_words_set = set() # множество уникальных слов
-    words_in_class = dict() # количество слов в классе
-    words_freq = dict() # частота появления слова в классе
+    words_in_class = dict()  # количество слов в классе
+    words_freq = dict()      # частота появления слова в классе
 
     def learn(self, class_name):
         self.classes.add(class_name)
+        self.words_freq[class_name] = {}
         if class_name is "internet":
             dir_name = learn_internet
         else:
@@ -29,24 +29,22 @@ class NaiveBayes:
 
         for file_name in os.listdir(dir_name):
             text = open(dir_name + "/" + file_name, "r").read().decode("utf-8")
-            words = [word for word in tokenizers.extract_words(text)]
+            words = [word.lower() for word in tokenizers.extract_words(text)]
             self.docs_number += 1
             self.unique_words_set = self.unique_words_set | set(words)
             stemmer = RussianStemmer()
             for word in words:
                 stemmed = stemmer.stem(word)
-                if stemmed in self.words_freq:
-                    self.words_freq[stemmed] += 1
+                if stemmed in self.words_freq[class_name]:
+                    self.words_freq[class_name][stemmed] += 1
                 else:
-                    self.words_freq[stemmed] = 1
+                    self.words_freq[class_name][stemmed] = 1
 
             if class_name in self.words_in_class:
                 self.words_in_class[class_name] += len(words)
-                self.words_freq[class_name].update(self.words_freq)
                 self.docs_in_class[class_name] += 1
             else:
                 self.words_in_class[class_name] = len(words)
-                self.words_freq[class_name] = self.words_freq
                 self.docs_in_class[class_name] = 1
 
     def classify(self, input):
