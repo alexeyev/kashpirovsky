@@ -5,7 +5,7 @@ from scrapy.contrib.loader.processor import TakeFirst
 from scrapy.contrib.loader import XPathItemLoader
 from scrapy.selector import HtmlXPathSelector
 from scrapy.selector import Selector
-from news_crawler.items import NewsItem
+# from news_crawler.items import NewsItem
 from pymongo import MongoClient
 from scrapy.item import Item
  
