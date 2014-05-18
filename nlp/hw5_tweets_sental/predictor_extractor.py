@@ -15,11 +15,12 @@ sent = -1
 
 def wordlist(tweet):
     tokenized = word_tokenize(tweet)
-    filtered = [RussianStemmer().stem(token.lower()) for token in tokenized if wordpattern.match(token)]
+    #filtered = [RussianStemmer().stem(token.lower()) for token in tokenized if wordpattern.match(token)]
+    filtered = [token.lower() for token in tokenized if wordpattern.match(token)]
     return filtered
 
 def get_stats():
-    xml = open("tweets/tweets_by_trend.xml", "r")
+    xml = open("tweets/learn.xml", "r")
     tree = etree.parse(xml)
     stats = dict()
     words = set()
@@ -38,13 +39,17 @@ def get_stats():
                     words.add(word)
     return stats, words
 
-stats, words = get_stats()
-for w in words:
-    cw1 = stats[(0, w)]
-    cw = cw1 + stats[(1, w)]  
+def get_top(k):
+    stats, words = get_stats()
+    #for k, v in stats:
+    #    print stats[(k,v)], k, v
     """ PMI
     p(xy)       c(1, w) * total     c(1, w)
     -------- = ----------------- ~ ---------
     p(x)p(y)    c(1) * c(w)         c(w)
     """
-    print  str(cw1 / float(cw) * math.log(len(w))) + u"\t"  + w
+    return sorted([(-( (stats[(1, w)] - stats[(0, w)] + 1) * math.log(1 + stats[(1, w)]) / (1 + math.log(stats[(1, w)] + stats[(0, w)]))), w) for w in words])[:200]
+
+for k,v in get_top(100):
+    print -k, v
+
