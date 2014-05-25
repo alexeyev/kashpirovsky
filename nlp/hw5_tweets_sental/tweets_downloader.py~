@@ -60,7 +60,7 @@ class TweetsDownloader:
             text_child = etree.Element('text')
             text_child.text = tweet
             sent_child = etree.Element('sent')
-            sent_child.text = str(parameter)
+            sent_child.text = "1"
             child.append(text_child)
             child.append(sent_child)
             root.append(child)
