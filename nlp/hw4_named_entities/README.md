@@ -13,10 +13,10 @@
 Список признаков выглядит так: <br/>
 is_latin_0 is_latin_1 is_name_0 is_name_1 is_surname1 is_org_type_0 is_org_type_1 is_surname-1 is_surname0 is_org_type_-1 <br/> big_letters_-1 big_letters_0 big_letters_1 is_name_-1 is_latin_-1 <br/>
 
-Это сделано из расчета, что слова текста зависят друг от друга. 
-Результат для выборки #1 
+Это сделано из расчета, что слова текста зависят друг от друга.  <br/>
+Результат для выборки #1  <br/>
 
-test len:  5476 
+test len:  5476  <br/>
              precision    recall  f1-score   support 
 
       B-ORG       0.73      0.20      0.32       203
@@ -24,6 +24,6 @@ test len:  5476
       I-ORG       0.77      0.16      0.26       171
       I-PER       0.47      0.15      0.23        54
           O       0.93      1.00      0.96      4967
-
+<br/>
 avg / total       0.90      0.92      0.90      5476
 
