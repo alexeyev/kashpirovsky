@@ -17,6 +17,8 @@ is_latin_0 is_latin_1 is_name_0 is_name_1 is_surname1 is_org_type_0 is_org_type_
 Результат для выборки #1  <br/>
 
 test len:  5476  <br/>
+             
+             
              precision    recall  f1-score   support 
 
       B-ORG       0.73      0.20      0.32       203
