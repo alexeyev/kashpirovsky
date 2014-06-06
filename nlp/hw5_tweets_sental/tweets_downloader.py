@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import ConfigParser
 from TwitterAPI import TwitterAPI
-from lxml import etree
-#from examples.streaming import StdOutListener
+#from lxml import etree
+from examples.streaming import StdOutListener
 from lxml.etree import XMLParser
 from tweepy import StreamListener, OAuthHandler, Stream, API, Cursor
 import tweepy
@@ -48,23 +48,18 @@ class TweetsDownloader:
 
     def download(self):
         self.grab_tweets(self.positive_query, self.positive_tweets)
-        self.save(self.positive_tweets, "tweets/positive.xml", 1)
+        self.save(self.positive_tweets, "tweets/positive.xml")
 
         self.grab_tweets(self.negative_query, self.negative_tweets)
-        self.save(self.negative_tweets, "tweets/negative.xml", 0)
+        self.save(self.negative_tweets, "tweets/negative.xml")
 
-    def save(self, tweets, file_name, parameter):
+    def save(self, tweets, file_name):
         root = etree.Element('tweets')
         for tweet in tweets:
-            child = etree.Element('tweet')            
-            text_child = etree.Element('text')
-            text_child.text = tweet
-            sent_child = etree.Element('sent')
-            sent_child.text = str(parameter)
-            child.append(text_child)
-            child.append(sent_child)
+            child = etree.Element('tweet')
+            child.text = tweet
             root.append(child)
-        f = open(file_name, "w+")
+        f = open(file_name, "w")
         f.write(etree.tostring(root, pretty_print=True, encoding='UTF-8'))
         f.close()
 
@@ -79,7 +74,7 @@ class TweetsDownloader:
             child.append(text_child)
             child.append(sent_child)
             root.append(child)
-        f = open(file_name, "w+")
+        f = open(file_name, "w")
         f.write(etree.tostring(root, pretty_print=True, encoding='UTF-8'))
         f.close()
 
@@ -109,11 +104,11 @@ class TweetsDownloader:
     def download_tweets_by_trend_2(self):
         api = TwitterAPI(consumer_key, consumer_secret, access_token, access_token_secret)
         tweets = set()
-        limit = 2000
+        limit = 200
         counter = 0
-        dates = ['2014-05-18', '2014-05-17', '2014-05-16', '2014-05-15', '2014-05-14', '2014-05-13','2014-05-12','2014-05-11','2014-05-10','2014-05-09','2014-05-08','2014-05-07', '2014-05-06', '2014-05-03', '2014-05-05', '2014-05-04', '2014-05-02', '2014-05-01', '2014-04-07', '2014-04-20','2014-05-19','2014-04-05']
+        dates = ['2014-05-18', '2014-05-17', '2014-05-16', '2014-05-15', '2014-05-14', '2014-05-13','2014-05-12','2014-05-11','2014-05-10','2014-05-09','2014-05-08','2014-05-07']
         for date in dates:
-            r = api.request('search/tweets', {'q': ':) OR =) OR ;)', 'lang': 'ru', 'count': '10000', 'until': date})
+            r = api.request('search/tweets', {'q': '#питер', 'lang': 'ru', 'count': '10000', 'until': date})
             for item in r.get_iterator():
                 if len(item['text']) > 30:
                     tweets.add(item['text'])
@@ -123,10 +118,10 @@ class TweetsDownloader:
             if counter >= limit:
                 break
 
-        self.save_for_markup(tweets, "tweets/tweets_smile_neg.xml")
+        self.save_for_markup(tweets, "tweets/tweets_by_trend.xml")
 
 
 downloader = TweetsDownloader()
-downloader.download()
+# downloader.download()
 # downloader.read()
-#downloader.download_tweets_by_trend_2()
+downloader.download_tweets_by_trend_2()
