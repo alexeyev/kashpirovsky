@@ -172,10 +172,10 @@ class FeatureEvaluator:
 
 
 eval = FeatureEvaluator()
-eval.eval("data/ru_corpus.train.txt", "data/ru_corpus.train.evaluated.txt")
-eval.eval("data/ru_corpus.test.txt", "data/ru_corpus.test.evaluated.txt")
-eval.train("data/ru_corpus.train.evaluated.txt")
-eval.test("data/ru_corpus.test.evaluated.txt")
+# eval.eval("data/ru_corpus_balanced_2.train.txt", "data/ru_corpus_balanced_2.train.evaluated.txt")
+# eval.eval("data/ru_corpus.test.txt", "data/ru_corpus.test.evaluated.txt")
+# eval.train("data/ru_corpus.train.evaluated.txt")
+# eval.test("data/ru_corpus.test.evaluated.txt")
 eval.calc_metrics()
 # eval.eval("data/ru_corpus.train.txt", "data/ru_corpus.train.evaluated.txt")
 # eval.calc_metrics()
